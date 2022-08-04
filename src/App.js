@@ -137,8 +137,6 @@ class App extends React.Component {
     const artGobblerContract = new ethers_1.ethers.Contract(ART_GOBBLERS_ADDRESS, gobABI, provider);
     const gooContract = new ethers_1.ethers.Contract(GOO_CONTRACT_ADDRESS, gooABI, provider);
     const multicallContract = new ethers_1.ethers.Contract(MULTICALL_ADDRESS, mulABI, provider);
-    const artGobblerInterface = artGobblerContract.interface;
-    const gooInterface = gooContract.interface;
     const gooDecimal = 18;
     const everyoneGooBalance = [];
     const everyoneGobblerBalance = [];
@@ -148,19 +146,19 @@ class App extends React.Component {
             {
                 target: ART_GOBBLERS_ADDRESS,
                 allowFailure: false,
-                callData: artGobblerInterface.encodeFunctionData("gooBalance", [
+                callData: artGobblerContract.interface.encodeFunctionData("gooBalance", [
                     address,
                 ]),
             },
             {
                 target: gooContract.address,
                 allowFailure: false,
-                callData: gooInterface.encodeFunctionData("balanceOf", [address]),
+                callData: gooContract.interface.encodeFunctionData("balanceOf", [address]),
             },
             {
                 target: artGobblerContract.address,
                 allowFailure: false,
-                callData: artGobblerInterface.encodeFunctionData("getUserEmissionMultiple", [address]),
+                callData: artGobblerContract.interface.encodeFunctionData("getUserEmissionMultiple", [address]),
             },
         ];
     })
